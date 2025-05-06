@@ -12,9 +12,9 @@ export const createTodo = (todo: Omit<Todo, 'id'>): Promise<Todo> => {
 };
 
 export const deleteTodo = (todoId: number) => {
-  return client.delete<Todo>('/todos', todoId);
+  return client.delete(`/todos/${todoId}`);
 };
 
 export const updateTodo = (todo: Todo) => {
-  return client.patch<Todo>('/todos', todo);
+  return client.patch<Todo>(`/todos/${todo.id}`, todo);
 };
