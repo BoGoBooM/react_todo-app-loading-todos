@@ -8,11 +8,7 @@ type Props = {
   handleStatusValueChange: (statusValue: FilterStatus) => void;
 };
 
-const FILTER_LABELS: Record<FilterStatus, string> = {
-  [FilterStatus.All]: 'All',
-  [FilterStatus.Active]: 'Active',
-  [FilterStatus.Completed]: 'Completed',
-};
+const filters = Object.values(FilterStatus);
 
 export const Footer: React.FC<Props> = ({
   todosCompleted,
@@ -27,17 +23,17 @@ export const Footer: React.FC<Props> = ({
       </span>
 
       <nav className="filter" data-cy="Filter">
-        {Object.values(FilterStatus).map(status => (
+        {filters.map(filter => (
           <a
-            key={status}
-            href={`#/${status === FilterStatus.All ? '' : status}`}
+            key={filter}
+            href={`#/${filter === FilterStatus.All ? '' : filter}`}
+            data-cy={`FilterLink${filter.charAt(0).toUpperCase() + filter.slice(1)}`}
             className={classNames('filter__link', {
-              selected: statusValue === FilterStatus.All,
+              selected: statusValue === filter,
             })}
-            data-cy={`FilterLink${FILTER_LABELS[status]}`}
-            onClick={() => handleStatusValueChange(FilterStatus.All)}
+            onClick={() => handleStatusValueChange(filter)}
           >
-            {FILTER_LABELS[status]}
+            {filter.charAt(0).toUpperCase() + filter.slice(1)}
           </a>
         ))}
       </nav>
